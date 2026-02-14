@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Picchi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --pink: #ff8fa3;
+            --soft-pink: #fff0f3;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Baloo Da 2', cursive;
+            background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #4a4a4a;
+        }
+
+        /* Floating Hearts Background */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            animation: float 6s linear infinite;
+            font-size: 20px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Pages/Sections */
+        .page {
+            display: none; /* Hidden by default */
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.5);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* Images */
+        .img-gallery {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .chat-img {
+            width: 45%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .chat-img:hover {
+            transform: scale(1.05);
+            z-index: 15;
+        }
+
+        .main-photo {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            border: 5px solid white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin: 10px auto;
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Baloo Da 2', cursive;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+        }
+
+        .btn-secondary {
+            background: #ff8fa3;
+            color: #fff;
+        }
+
+        /* Proposal Section */
+        .proposal-box {
+            background: #fff0f3;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed var(--primary);
+            margin-top: 20px;
+        }
+
+        .big-heart {
+            font-size: 50px;
+            color: var(--primary);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* Footer Signature - Negative Color Magic */
+        .footer-sig {
+            position: fixed;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 9999;
+            /* The magic property for negative color */
+            mix-blend-mode: difference; 
+            color: #fff; /* Base color that gets inverted */
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            h1 { font-size: 1.8rem; }
+            .chat-img { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="heartContainer"></div>
+
+    <div class="container">
+        
+        <div id="p1" class="page active">
+            <div class="big-heart">❤️</div>
+            <h1>শোনো Picchi...</h1>
+            <p>আজকের দিনটা একটু অন্যরকম। চারদিকে ভালোবাসা, কিন্তু আমার সবটুকু ভাবনা শুধু তোমাকে ঘিরে।</p>
+            <p>তোমার জন্য ছোট্ট একটা দুনিয়া সাজিয়েছি। দেখবে?</p>
+            <br>
+            <button class="btn" onclick="nextPage(2)">ENTER ➜</button>
+        </div>
+
+        <div id="p2" class="page">
+            <h1>🙂😳😳🥲🥲🙂</h1>
+            <p>মনে আছে এই কথাগুলো? আমি জানি না কেন, কিন্তু তোমার সামনে এলে আমি সত্যিই বোবা হয়ে যাই,বাকি এটা করেছি বলে তুমি রাগ করলে sorry 🙂|</p>
+            
+            <div class="img-gallery">
+                <img src="chat1.jpg" alt="Our Chat 1" class="chat-img" onclick="fullScreen(this)">
+                <img src="chat2.jpg" alt="Our Chat 2" class="chat-img" onclick="fullScreen(this)">
+            </div>
+
+            <p>"তোকে সামনে দেখলে হার্টবিট তেজ হয়ে যায়..." - কথাটা মিথ্যে ছিল না।</p>
+            
+            <button class="btn btn-secondary" onclick="prevPage(1)">⬅ PREV</button>
+            <button class="btn" onclick="nextPage(3)">NEXT ➜</button>
+        </div>
+
+        <div id="p3" class="page">
+            <h1>.When you look at.</h1>
+            
+            <img src="her.jpg" alt="Picchi" class="main-photo">
+            
+            <p>তুমি বিশ্বাস করবে না, তোমাকে সামনাসামনি দেখার জন্য আমি কতটা অপেক্ষায় থাকি। ওই সাদা ফুলটা তোমার চুলে যতটা সুন্দর লাগে, পৃথিবীর আর কোথাও ততটা সুন্দর লাগে না।</p>
+            
+            <img src="flowers.jpg" alt="Flowers" style="width: 100px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 15px;">
+            
+            <p>তোমার এই সরলতাই আমাকে বারবার প্রেমে ফেলে।</p>
+
+            <button class="btn btn-secondary" onclick="prevPage(2)">⬅ PREV</button>
+            <button class="btn" onclick="nextPage(4)">NEXT➜</button>
+        </div>
+
+        <div id="p4" class="page">
+            <div class="big-heart">🌹</div>
+            <h1>HAPLY VALENTINE'S MY PICCHI🥲</h1>
+            
+            <div class="proposal-box">
+                <p>হয়তো আমি গুছিয়ে কথা বলতে পারি না যেটা সত্যি কিন্তু আমি সত্যি কথা বলছি তুমি আমার কাছে থাকলে না এই দুনিয়া তে সবথেকে বেশি সুখী মানুষ আমি হতে পারব 🙂</p>
+                <p class="highlight">তুমি কি আমার পাগলামিগুলো সারাজীবনের জন্য সহ্য করবে? তুমি কি আমাকে একটু গুছিয়ে রাখতে পারবে please 🥺?</p>
+                <h2>WILL YOU BE MY VALENTINE 🙂</h2>
+            </div>
+            <br>
+            <p style="font-size: 0.9rem; opacity: 0.8;">(যদি না বলো, তাও আমি তোমার আশেপাশেই থাকবো! 😜)</p>
+
+            <button class="btn btn-secondary" onclick="prevPage(3)">⬅ NO</button>
+            <button class="btn" onclick="acceptProposal()">HMM❤️</button>
+        </div>
+
+        <div id="success" class="page">
+            <h1>🥺🥺🥺</h1>
+            <p>সত্যি আমার সাথে ও এমন সুন্দর ঘটনা ঘটতে পারে 🙂হয়তো তুমি এই page টা পর্যন্ত আসবে না তাও বানালাম 🙂 কানো জিজ্ঞাসা করলে বলব আমর ভালো লাগে তোমাকে এইভাবে ভালবাসতে সে তুমি বসো না বসো 🙂আমি আদৌ জানি ও না তুমি এটা পড়বে বা এই পর্যন্ত আসবে ও কি না আসলে যেটুকু আমার সাধ্য আমি করেছি তোমার জন্য 🙂 যদি তুমি পড়ে থাকো please একটু খুশি হয়ে যেও তোমাকে খুশি দেখ ভীষন ভালো লাগে জানোতো 🙂 আর একটা লাস্ট আবদার জানিনা পড়ছো কি না তুমি আমার সাথে এইভাবে কথা বলে যেও সারাজীবন তাতে ই হবে 🙂</p>
+            <div class="big-heart"></div>
+        </div>
+
+    </div>
+
+    <div class="footer-sig">by parth</div>
+
+    <script>
+        // Create Floating Hearts
+        function createHearts() {
+            const container = document.getElementById('heartContainer');
+            for(let i=0; i<20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerHTML = Math.random() > 0.5 ? '❤️' : '🌸';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Navigation Logic
+        function nextPage(pageNumber) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            // Show target page
+            document.getElementById('p' + pageNumber).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function prevPage(pageNumber) {
+            nextPage(pageNumber);
+        }
+
+        // Proposal Acceptance
+        function acceptProposal() {
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            document.getElementById('success').classList.add('active');
+            fireConfetti();
+        }
+
+        function fireConfetti() {
+            const container = document.getElementById('heartContainer');
+            // Add more intense hearts
+            for(let i=0; i<50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = '2s';
+                container.appendChild(heart);
+            }
+        }
+
+        // Image zoom for chat (Simple)
+        function fullScreen(img) {
+            if(img.style.transform === "scale(2)") {
+                img.style.transform = "scale(1)";
+                img.style.position = "static";
+            } else {
+                img.style.transform = "scale(2)";
+                img.style.zIndex = "100";
+            }
+        }
+
+        // Initialize
+        createHearts();
+    </script>
+</body>
+</html>
